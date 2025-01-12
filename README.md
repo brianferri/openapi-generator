@@ -142,7 +142,7 @@ OpenAPI Spec compatibility: 1.0, 1.1, 1.2, 2.0, 3.0, 3.1 (beta support)
 
 For old releases, please refer to the [**Release**](https://github.com/OpenAPITools/openapi-generator/releases) page.
 
-For decomissioned generators/libraries/frameworks, please refer to [the "Decommission" label](https://github.com/OpenAPITools/openapi-generator/issues?q=label%3ADecommission+is%3Amerged+) in the pull request page.
+For decommissioned generators/libraries/frameworks, please refer to [the "Decommission" label](https://github.com/OpenAPITools/openapi-generator/issues?q=label%3ADecommission+is%3Amerged+) in the pull request page.
 
 ## [1.2 - Artifacts on Maven Central](#table-of-contents)
 
@@ -1210,7 +1210,7 @@ If you want to join the committee, please kindly apply by sending an email to te
 | Android               | @jaz-ah (2017/09)                                                                                                                                                                                                                                     |
 | Apex                  |                                                                                                                                                                                                                                                       |
 | Bash                  | @frol (2017/07) @bkryza (2017/08) @kenjones-cisco (2017/09)                                                                                                                                                                                           |
-| C                     | @zhemant (2018/11) @ityuhui (2019/12) @michelealbano (2020/03)                                                                                                                                                                                        |
+| C                     | @zhemant (2018/11) @ityuhui (2019/12) @michelealbano (2020/03) @eafer (2024/12)                                                                                                                                                                                        |
 | C++                   | @ravinikam (2017/07) @stkrwork (2017/07) @etherealjoy (2018/02) @martindelille (2018/03) @muttleyxd (2019/08)                                                                                                                                         |
 | C#                    | @mandrean (2017/08) @shibayan (2020/02) @Blackclaws (2021/03) @lucamazzanti (2021/05) @iBicha (2023/07)                                                                                                                                          |
 | Clojure               |                                                                                                                                                                                                                                                       |

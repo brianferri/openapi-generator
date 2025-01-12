@@ -1942,9 +1942,9 @@ public class DefaultCodegen implements CodegenConfig {
         if (ModelUtils.isMapSchema(schema)) {
             Schema additionalProperties = ModelUtils.getAdditionalProperties(schema);
             String inner = getSchemaType(additionalProperties);
-            String mapInstantion = instantiationTypes.get("map");
-            if (mapInstantion != null) {
-                return mapInstantion + "<String, " + inner + ">";
+            String mapInstantiation = instantiationTypes.get("map");
+            if (mapInstantiation != null) {
+                return mapInstantiation + "<String, " + inner + ">";
             }
             return inner;
         } else if (ModelUtils.isArraySchema(schema)) {
@@ -2217,7 +2217,7 @@ public class DefaultCodegen implements CodegenConfig {
      * @return string presentation of the default value of the property
      */
     public String toDefaultValue(CodegenProperty codegenProperty, Schema schema) {
-        // use toDefaultValue(schema) if generator has not overriden this method
+        // use toDefaultValue(schema) if generator has not overridden this method
         return toDefaultValue(schema);
     }
 
@@ -3149,7 +3149,7 @@ public class DefaultCodegen implements CodegenConfig {
             // if we are trying to set additionalProperties on an empty schema stop recursing
             return;
         }
-        // Note: This flag is set to true if additioanl properties
+        // Note: This flag is set to true if additional properties
         // is set (any type, free form object, boolean true, string, etc).
         // The variable name may be renamed later to avoid confusion.
         boolean additionalPropertiesIsAnyType = false;
@@ -3875,29 +3875,8 @@ public class DefaultCodegen implements CodegenConfig {
         }
 
         Schema original = null;
-        // process the dereference schema if it's a ref to allOf with a single item
-        // and certain field(s) (e.g. description, readyOnly, etc) is set
-        if (p.get$ref() != null) {
-            Schema derefSchema = ModelUtils.getReferencedSchema(openAPI, p);
-            if (ModelUtils.isAllOfWithSingleItem(derefSchema) && (
-                    derefSchema.getReadOnly() != null ||
-                            derefSchema.getWriteOnly() != null ||
-                            derefSchema.getDeprecated() != null ||
-                            derefSchema.getDescription() != null ||
-                            derefSchema.getMaxLength() != null ||
-                            derefSchema.getMinLength() != null ||
-                            derefSchema.getMinimum() != null ||
-                            derefSchema.getMaximum() != null ||
-                            derefSchema.getMaximum() != null ||
-                            derefSchema.getMinItems() != null ||
-                            derefSchema.getTitle() != null
-                    )) {
-                p = ModelUtils.getReferencedSchema(openAPI, p);
-            }
-        }
-
         // check if it's allOf (only 1 sub schema) with or without default/nullable/etc set in the top level
-        if (ModelUtils.isAllOfWithSingleItem(p)) {
+        if (ModelUtils.isAllOf(p) && p.getAllOf().size() == 1) {
             if (p.getAllOf().get(0) instanceof Schema) {
                 original = p;
                 p = (Schema) p.getAllOf().get(0);
@@ -3989,7 +3968,7 @@ public class DefaultCodegen implements CodegenConfig {
             property._enum = new ArrayList<>();
             for (Object i : _enum) {
                 // raw null values in enums are unions for nullable
-                // atttributes, not actual enum values, so we remove them here
+                // attributes, not actual enum values, so we remove them here
                 if (i == null) {
                     property.isNullable = true;
                     continue;
@@ -4001,7 +3980,7 @@ public class DefaultCodegen implements CodegenConfig {
 
             Map<String, Object> allowableValues = new HashMap<>();
             allowableValues.put("values", _enum);
-            if (allowableValues.size() > 0) {
+            if (!allowableValues.isEmpty()) {
                 property.allowableValues = allowableValues;
             }
         }
@@ -6523,6 +6502,9 @@ public class DefaultCodegen implements CodegenConfig {
 
             // input.name => input_name
             modifiable = this.sanitizeValue(modifiable, "\\.", "_", exceptions);
+
+            // input:name => input_name
+            modifiable = this.sanitizeValue(modifiable, ":", "_", exceptions);
 
             // input-name => input_name
             modifiable = this.sanitizeValue(modifiable, "-", "_", exceptions);
